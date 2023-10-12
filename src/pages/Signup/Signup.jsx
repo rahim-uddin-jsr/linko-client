@@ -1,8 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import * as yup from "yup";
+import GoogleAuth from "../../components/GoogleAuth/GoogleAuth";
 import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 
 const schema = yup
@@ -27,12 +29,11 @@ const schema = yup
   .required("this filed is required");
 
 export const Signup = () => {
-  const { signUp } = useContext(AuthContext);
-
+  const { signUp, logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
@@ -41,7 +42,12 @@ export const Signup = () => {
     signUp(email, password)
       .then((res) => {
         console.log("🚀 ~ file: Signup.jsx:43 ~ onSubmit ~ res:", res);
-        reset();
+        Swal.fire("Signup success!").then(() => {
+          reset();
+          logOut().then(() => {
+            navigate("/signin");
+          });
+        });
       })
       .catch((err) => {
         console.log("🚀 ~ file: Signup.jsx:45 ~ signUp ~ err:", err);
@@ -141,9 +147,11 @@ export const Signup = () => {
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Signup</button>
               </div>
-              <label className="label">
-                <span className="label-text-alt">
-                  Already have an account?{""}
+              <div className="divider">OR</div>
+              <GoogleAuth />
+              <label className="label label-text-alt">
+                <span className=" text-center w-full">
+                  Already have an account?{" "}
                   <Link className="link link-hover" to={`/signin`}>
                     Signin
                   </Link>

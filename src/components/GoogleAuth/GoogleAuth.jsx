@@ -19,7 +19,10 @@ const GoogleAuth = () => {
   return (
     <>
       <Toaster />
-      <button onClick={handleGoogleLogin} className="w-full py-1 ">
+      <button
+        onClick={handleGoogleLogin}
+        className="w-full shadow-lg btn btn-neutral"
+      >
         <svg
           className="mx-auto"
           xmlns="http://www.w3.org/2000/svg"
