@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -42,12 +43,23 @@ export const Signup = () => {
     signUp(email, password)
       .then((res) => {
         console.log("🚀 ~ file: Signup.jsx:43 ~ onSubmit ~ res:", res);
-        Swal.fire("Signup success!").then(() => {
-          reset();
-          logOut().then(() => {
-            navigate("/signin");
+        data.userId = res.user.uid;
+        axios
+          .post("http://localhost:5000/users", data)
+          .then((response) => {
+            console.log("Data successfully sent:", response.data);
+            if (response?.data?.acknowledged) {
+              Swal.fire("Signup success!").then(() => {
+                reset();
+                logOut().then(() => {
+                  navigate("/signin");
+                });
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error sending data:", error);
           });
-        });
       })
       .catch((err) => {
         console.log("🚀 ~ file: Signup.jsx:45 ~ signUp ~ err:", err);

@@ -4,7 +4,7 @@ import Navigation from "../../shared/Navigation";
 
 export const Main = () => {
   return (
-    <div>
+    <div className="w-screen">
       <Navigation />
       <Outlet />
       <Footer />
