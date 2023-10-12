@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
 import { Main } from "../layout/Main/Main";
 import { About } from "../pages/About/About";
+import Error from "../pages/Error/Error";
 import { Home } from "../pages/Home/Home";
 import PostDetails from "../pages/PostDetails/PostDetails";
 import { Profile } from "../pages/Profile/Profile";
@@ -11,6 +12,7 @@ import { Signup } from "../pages/Signup/Signup";
 export const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <Error />,
     element: <Main />,
     children: [
       { path: "/", element: <Home /> },

@@ -15,10 +15,6 @@ const GoogleAuth = () => {
       navigate("/");
       toast("authentication success!");
     });
-    console.log(
-      "🚀 ~ file: GoogleAuth.jsx:5 ~ handleGoogleLogin ~ clicked:",
-      "clicked"
-    );
   };
   return (
     <>
