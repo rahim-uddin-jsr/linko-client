@@ -1,6 +1,11 @@
+import GoogleAuth from "../../components/GoogleAuth/GoogleAuth";
 
 export const Signin = () => {
   return (
-    <div>Signin</div>
-  )
-}
+    <>
+      SigninSigninSigninSigninSignin
+      <br />
+      <GoogleAuth />
+    </>
+  );
+};

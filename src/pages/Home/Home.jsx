@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthProvider/AuthProvider";
+
 export const Home = () => {
-  console.log(import.meta.env.VITE_So);
+  const { user } = useContext(AuthContext);
+  console.log(user);
+
   return <div>Home</div>;
 };

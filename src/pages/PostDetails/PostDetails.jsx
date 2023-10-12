@@ -1,8 +1,9 @@
+import { useParams } from "react-router-dom";
 
 function PostDetails() {
-  return (
-    <div>PostDetails</div>
-  )
+  const { id } = useParams();
+  console.log("🚀 ~ file: PostDetails.jsx:5 ~ PostDetails ~ id:", id);
+  return <div>PostDetails</div>;
 }
 
-export default PostDetails
+export default PostDetails;

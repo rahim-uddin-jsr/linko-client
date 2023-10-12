@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
 import { Main } from "../layout/Main/Main";
 import { About } from "../pages/About/About";
 import { Home } from "../pages/Home/Home";
@@ -14,10 +15,21 @@ export const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/about", element: <About /> },
-      { path: "/profile", element: <Profile /> },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
       {
         path: `/post-details/:id`,
-        element: <PostDetails />,
+        element: (
+          <PrivateRoute>
+            <PostDetails />
+          </PrivateRoute>
+        ),
       },
     ],
   },
