@@ -1,6 +1,8 @@
+import axios from "axios";
 import { useContext } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 
 const GoogleAuth = () => {
@@ -8,12 +10,29 @@ const GoogleAuth = () => {
   const navigate = useNavigate();
   const handleGoogleLogin = () => {
     googleAuth().then((res) => {
-      console.log(
-        "🚀 ~ file: GoogleAuth.jsx:8 ~ googleAuth ~ res:",
-        res.user.displayName
-      );
-      navigate("/");
-      toast("authentication success!");
+      const data = {
+        userId: res?.user?.uid,
+        name: res?.user?.displayName,
+      };
+      axios
+        .post("http://localhost:5000/users", data)
+        .then((response) => {
+          console.log("Data successfully sent:", response.data);
+          if (response?.data?.acknowledged) {
+            Swal.fire("Signup success!").then(() => {
+              navigate("/");
+              toast("authentication success!");
+            });
+          } else if (response.data[0] == 1) {
+            Swal.fire("Sign in success!").then(() => {
+              navigate("/");
+              toast("authentication success!");
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error sending data:", error);
+        });
     });
   };
   return (
