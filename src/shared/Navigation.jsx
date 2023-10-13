@@ -64,7 +64,7 @@ const Navigation = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full text-2xl">
-                {user.displayName.slice(0, 1)}
+                {user.displayName ? user?.displayName?.slice(0, 1) : "U"}
               </div>
             </label>
             <ul

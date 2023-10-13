@@ -29,7 +29,7 @@ const PostYourThots = () => {
             <div className="avatar">
               <div className=" rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                 <div className="w-12 h-12 flex rounded-full text-2xl justify-center items-center">
-                  {user ? user?.displayName.slice(0, 1) : "U"}
+                  {user?.displayName ? user?.displayName?.slice(0, 1) : "U"}
                 </div>
               </div>
             </div>

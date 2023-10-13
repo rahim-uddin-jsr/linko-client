@@ -2,14 +2,17 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { AuthContext } from "../../context/AuthProvider/AuthProvider";
+import { PostContext } from "../../context/PostProvider/PostProvider";
 
 const ImageUploader = ({ setIsOpen, text }) => {
   const img_token = import.meta.env.VITE_IMG_UPLOAD_TOKEN;
   const img_api_url = `https://api.imgbb.com/1/upload?key=${img_token}`;
   const [selectedImages, setSelectedImages] = useState([]);
   const [uploadPercentage, setUploadPercentage] = useState(0);
-  const [imgUrl, setImgUrl] = useState("");
+  const [formDataUser, setFormDataUser] = useState("");
   const { user } = useContext(AuthContext);
+  const { refetch, setRefetch } = useContext(PostContext);
+
   const onDrop = async (acceptedFiles) => {
     // Handle the dropped files here
     const updatedImages = acceptedFiles.map((file) => ({
@@ -20,19 +23,7 @@ const ImageUploader = ({ setIsOpen, text }) => {
 
     const formData = new FormData();
     formData.append("image", acceptedFiles[0]);
-    fetch(img_api_url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((imgRes) => {
-        console.log(
-          "🚀 ~ file: ImageUploader.jsx:29 ~ .then ~ imgRes:",
-          imgRes
-        );
-        const imageUrl = imgRes?.data?.display_url;
-        setImgUrl(imageUrl);
-      });
+    setFormDataUser(formData);
 
     acceptedFiles.forEach((file, index) => {
       formData.append(`image${index + 1}`, file);
@@ -51,26 +42,43 @@ const ImageUploader = ({ setIsOpen, text }) => {
   const handlePost = () => {
     console.log(text, selectedImages);
 
-    const data = {
-      caption: text,
-      imgUrl,
-      userId: user.uid,
-    };
-    axios
-      .post(`http://localhost:5000/post?uid=${user.uid}`, data, {
-        headers: {
-          Authorization: `Bearer,${localStorage.getItem("access_token")}`, // Set the Authorization header with the token
-        },
-        onUploadProgress: (progressEvent) => {
-          const progress = (progressEvent.loaded / progressEvent.total) * 100;
-          setUploadPercentage(progress);
-        },
-      })
-      .then((res) => {
-        console.log("Images uploaded successfully:", res.data);
-      })
-      .catch((err) => {
-        console.log(err);
+    fetch(img_api_url, {
+      method: "POST",
+      body: formDataUser,
+    })
+      .then((res) => res.json())
+      .then((imgRes) => {
+        console.log(
+          "🚀 ~ file: ImageUploader.jsx:29 ~ .then ~ imgRes:",
+          imgRes
+        );
+        const imageUrl = imgRes?.data?.display_url;
+        if (imageUrl) {
+          const data = {
+            caption: text,
+            imgUrl: imageUrl,
+            userId: user.uid,
+          };
+          axios
+            .post(`http://localhost:5000/post?uid=${user.uid}`, data, {
+              headers: {
+                Authorization: `Bearer,${localStorage.getItem("access_token")}`, // Set the Authorization header with the token
+              },
+              onUploadProgress: (progressEvent) => {
+                const progress =
+                  (progressEvent.loaded / progressEvent.total) * 100;
+                setUploadPercentage(progress);
+              },
+            })
+            .then((res) => {
+              console.log("Images uploaded successfully:", res.data);
+              setIsOpen(false);
+              setRefetch(!refetch);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       });
   };
 
