@@ -13,6 +13,7 @@ const PostYourThots = () => {
     setIsOpen(false);
   }
   const [text, setText] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [textAreaHeight, setTextAreaHeight] = useState("auto");
 
   const handleChange = (event) => {
@@ -22,7 +23,7 @@ const PostYourThots = () => {
     style.height = `${event.target.scrollHeight}px`;
   };
   return (
-    <div className="xl:w-4/6 lg:w-1/2 md:w-10/12 mx-3 md:mx-auto my-5">
+    <div className="xl:w-4/6 lg:w-1/2 md:w-10/12 sm:mx-0 mx-3 md:mx-auto my-5">
       <div className="card w-full bg-base-100 shadow-xl">
         <div className="card-body">
           <div className="flex gap-6">

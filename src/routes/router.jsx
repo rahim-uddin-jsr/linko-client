@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: `/post-details/:id`,
+        path: `/post/:id`,
         element: (
           <PrivateRoute>
             <PostDetails />

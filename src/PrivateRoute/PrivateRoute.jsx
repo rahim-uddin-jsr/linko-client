@@ -1,26 +1,30 @@
 import { useContext } from "react";
-import { Dna } from "react-loader-spinner";
+import { Grid } from "react-loader-spinner";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider/AuthProvider";
 export const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
+  console.log(
+    "🚀 ~ file: PrivateRoute.jsx:7 ~ PrivateRoute ~ loading:",
+    loading
+  );
   const location = useLocation();
 
   if (loading) {
     return (
       <>
-        <div>
-          <div className=" flex justify-center items-center w-full h-screen"></div>
-          <Dna
-            className="justify-center items-center"
-            height={100}
-            width={100}
-            radius={5}
-            ariaLabel="ball-triangle-loading"
-            wrapperClass={{}}
-            wrapperStyle=""
+        <div className="flex flex-col gap-8 justify-start mt-16 items-center w-full h-screen">
+          <Grid
+            height="80"
+            width="80"
+            color="#fff"
+            ariaLabel="grid-loading"
+            radius="12.5"
+            wrapperStyle={{}}
+            wrapperClass=""
             visible={true}
           />
+          <h2 className="text-2xl">user data is lodging...</h2>
         </div>
       </>
     );
