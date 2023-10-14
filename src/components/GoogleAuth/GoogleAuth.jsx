@@ -17,7 +17,6 @@ const GoogleAuth = () => {
       axios
         .post("http://localhost:5000/users", data)
         .then((response) => {
-          console.log("Data successfully sent:", response.data);
           if (response?.data?.acknowledged) {
             Swal.fire("Signup success!").then(() => {
               navigate("/");
@@ -39,6 +38,7 @@ const GoogleAuth = () => {
     <>
       <Toaster />
       <button
+        type="button"
         onClick={handleGoogleLogin}
         className="w-full shadow-lg btn btn-neutral"
       >

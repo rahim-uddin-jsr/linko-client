@@ -79,7 +79,7 @@ export const About = () => {
   return (
     <div>
       <h2 className="my-5 text-3xl">About</h2>
-      <div className="relative card-body flex-col bg-neutral-focus xl:w-4/6 lg:w-1/2 md:w-10/12 mx-auto outline outline-info -outline-offset-4 shadow-lg rounded-md mt-12">
+      <div className="relative card-body flex-col bg-neutral-focus max-w-4xl xl:w-4/6 lg:w-1/2 md:w-10/12 mx-auto outline outline-info -outline-offset-4 shadow-lg rounded-md mt-12">
         <button
           onClick={() => setIsOpen(true)}
           className="absolute top-5 right-5 w-12 h-12 btn-info btn-circle flex justify-center items-center"

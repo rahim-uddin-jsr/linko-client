@@ -8,10 +8,10 @@ import { router } from "./routes/router.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <PostProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <PostProvider>
         <RouterProvider router={router}></RouterProvider>
-      </AuthProvider>
-    </PostProvider>
+      </PostProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

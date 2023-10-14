@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 import { PostContext } from "../../context/PostProvider/PostProvider";
 
@@ -40,18 +41,17 @@ const ImageUploader = ({ setIsOpen, text }) => {
     accept: "image/*", // Only allow image files
   });
   const handlePost = () => {
-    console.log(text, selectedImages);
-
+    if (!user) {
+      Swal.fire("please login first!");
+      setIsOpen(false);
+      return;
+    }
     fetch(img_api_url, {
       method: "POST",
       body: formDataUser,
     })
       .then((res) => res.json())
       .then((imgRes) => {
-        console.log(
-          "🚀 ~ file: ImageUploader.jsx:29 ~ .then ~ imgRes:",
-          imgRes
-        );
         const imageUrl = imgRes?.data?.display_url;
         if (imageUrl) {
           const data = {
@@ -71,7 +71,6 @@ const ImageUploader = ({ setIsOpen, text }) => {
               },
             })
             .then((res) => {
-              console.log("Images uploaded successfully:", res.data);
               setIsOpen(false);
               setRefetch(!refetch);
             })
@@ -83,7 +82,6 @@ const ImageUploader = ({ setIsOpen, text }) => {
   };
 
   useEffect(() => {
-    console.log(uploadPercentage);
   }, [uploadPercentage]);
   return (
     <div className="flex flex-col items-center">

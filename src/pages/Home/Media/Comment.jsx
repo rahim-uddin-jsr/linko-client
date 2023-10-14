@@ -18,6 +18,12 @@ const Comment = ({ id }) => {
   };
   const handleComment = (e) => {
     e.preventDefault();
+    if (!user) {
+      Swal.fire("please login first!");
+      setText("");
+      return;
+    }
+
     const data = {
       userId: user.uid,
       postId: id,

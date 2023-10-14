@@ -52,6 +52,7 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem("access_token");
       }
       setUser(currentUser);
+      setLoading(false);
     });
     return () => unsubscribe();
   }, [auth]);
